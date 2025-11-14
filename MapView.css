@@ -1,111 +1,202 @@
-/* Panel chỉ đường đẹp hơn */
+/* =============================
+   🧾 PANEL CHỈ ĐƯỜNG (NỀN TRẮNG)
+============================= */
 .custom-routing-panel {
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  width: 320px;
-  max-height: 80vh;
+  position: absolute !important;
+  top: 15px;
+  right: 15px;
+  width: 330px;
+  max-height: 85vh;
   overflow-y: auto;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(5px);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  border: 1px solid #ccc;
   z-index: 1000;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Thanh cuộn mượt */
-.custom-routing-panel::-webkit-scrollbar {
-  width: 6px;
-}
-.custom-routing-panel::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
+.custom-routing-panel .leaflet-routing-container,
+.custom-routing-panel .leaflet-routing-container * {
+  background: #fff !important;
+  color: #333 !important;
 }
 
-/* Chỉnh style cho nội dung hướng dẫn */
-.leaflet-routing-container {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  font-size: 14px;
+/* =============================
+   📦 KHUNG NHẬP ĐỊA CHỈ
+============================= */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.leaflet-routing-alt {
-  margin: 0 !important;
-}
-
-.leaflet-routing-geocoders,
-.leaflet-routing-add-waypoint {
-  display: none !important; /* Ẩn các nút phụ không cần thiết */
-}
-.swap-btn {
-  align-self: flex-end;
-  height: 38px;
-  width: 38px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.swap-btn:hover {
-  background: #0056b3;
-}
+/* Nền trắng tổng thể */
 .address-inputs {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 1000;
-  background: white;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  top: 20px;
+  left: 20px;
+  z-index: 2000;
+
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 18px;
+
+  width: 420px;
+  max-width: calc(100vw - 50px);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  border: 1px solid #f2f2f2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Căn giữa nội dung */
+  gap: 18px;
+  box-sizing: border-box;
 }
 
+/* INPUT GROUP */
 .input-group {
-  margin-bottom: 10px;
+  width: 90%; /* nhỏ hơn khung */
   position: relative;
 }
 
+.input-group label {
+  display: block;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  background: #fafafa;
+  outline: none;
+  transition: 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #0676ff;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(0, 119, 255, 0.4);
+}
+
+/* =============================
+   🚗 NÚT TÌM ĐƯỜNG
+============================= */
+.find-btn {
+  width: 90%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #007bff;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+
+  transition: 0.25s;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.find-btn:hover {
+  background: #0062d6;
+  transform: scale(1.03);
+}
+
+/* =============================
+   🔍 GỢI Ý ĐỊA CHỈ
+============================= */
 .suggestions {
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
+  width: 100%;
+
   background: white;
   border: 1px solid #ddd;
-  max-height: 150px;
-  overflow-y: auto;
-  z-index: 1001;
-  border-radius: 6px;
+  border-radius: 10px;
+
   list-style: none;
   padding: 0;
-  margin: 4px 0 0 0;
+  margin-top: 4px;
+
+  max-height: 180px;
+  overflow-y: auto;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 4000;
 }
 
 .suggestions li {
-  padding: 6px 10px;
+  padding: 10px 12px;
+  font-size: 14px;
   cursor: pointer;
+  transition: 0.15s;
 }
 
 .suggestions li:hover {
-  background: #f1f1f1;
-}
-
-.find-btn {
-  display: block;
-  margin: 8px auto 0;
-  padding: 6px 14px;
   background: #007bff;
   color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
 }
-.find-btn:hover {
-  background: #0056b3;
+
+/* =============================
+   🚍 NÚT "BẮT ĐẦU CHUYẾN ĐI"
+============================= */
+.start-trip-btn {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 3000;
+
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+
+  box-shadow: 0 6px 15px rgba(0, 128, 0, 0.3);
+  transition: 0.25s;
+}
+
+.start-trip-btn:hover {
+  background: #1e8a38;
+  transform: translateX(-50%) scale(1.05);
+}
+
+/* =============================
+   🚌 Xoay mượt icon xe bus
+============================= */
+.leaflet-marker-icon {
+  transition: transform 0.12s linear;
+  transform-origin: center;
+}
+
+/* =============================
+   📱 RESPONSIVE MOBILE
+============================= */
+@media (max-width: 500px) {
+  .address-inputs {
+    width: calc(100vw - 30px);
+    left: 15px;
+    top: 15px;
+    padding: 18px;
+  }
+
+  .input-group,
+  .find-btn {
+    width: 100%;
+  }
 }
