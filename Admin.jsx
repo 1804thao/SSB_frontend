@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ThongBao from "./ThongBao";
 import TableView from "../components/TableView";
 
 export default function Admin() {
@@ -24,23 +23,23 @@ export default function Admin() {
     { key: "canhbao", label: "Cảnh báo sự cố" },
   ];
 
+  // đăng xuất
   const handleLogout = () => {
     localStorage.removeItem("userRole");
     navigate("/login");
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [activeTab]);
-
+  // 🔄 Hàm tải dữ liệu dùng chung
   const fetchData = async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:5000/api/${activeTab}`);
+      let url = `http://localhost:5000/api/${activeTab}`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`Lỗi tải bảng ${activeTab}`);
       const data = await res.json();
       setData(data);
+      console.log("Dữ liệu nhận được:", data);
     } catch (err) {
       console.error(err);
       setError("Không thể tải dữ liệu từ máy chủ.");
@@ -49,44 +48,51 @@ export default function Admin() {
     }
   };
 
+  // Gọi fetchData mỗi khi đổi tab
+  useEffect(() => {
+    fetchData();
+  }, [activeTab]);
+
   return (
-  <div style={styles.container}>
-    <header style={styles.header}>
-      <h1 style={styles.title}>🚍 Hệ thống Quản lý Smart School Bus</h1>
-      <button onClick={handleLogout} style={styles.logout}>Đăng xuất</button>
-    </header>
-
-    <nav style={styles.nav}>
-      {tables.map((t) => (
-        <button
-          key={t.key}
-          style={{
-            ...styles.tabButton,
-            backgroundColor: activeTab === t.key ? "#16a34a" : "#e2e8f0",
-            color: activeTab === t.key ? "white" : "#1e293b",
-          }}
-          onClick={() => setActiveTab(t.key)}
-        >
-          {t.label}
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>🚍 Hệ thống Quản lý Smart School Bus</h1>
+        <button onClick={handleLogout} style={styles.logout}>
+          Đăng xuất
         </button>
-      ))}
-    </nav>
+      </header>
 
-    <main style={styles.main}>
-      {loading && <p>⏳ Đang tải dữ liệu...</p>}
-      {error && <p style={styles.error}>{error}</p>}
+      <nav style={styles.nav}>
+        {tables.map((t) => (
+          <button
+            key={t.key}
+            style={{
+              ...styles.tabButton,
+              backgroundColor: activeTab === t.key ? "#16a34a" : "#e2e8f0",
+              color: activeTab === t.key ? "white" : "#1e293b",
+            }}
+            onClick={() => setActiveTab(t.key)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
 
-      {!loading && !error && (
-            <TableView
-              title={tables.find((t) => t.key === activeTab)?.label}
-              data={data}
-              setData={setData}
-              activeTab={activeTab}
-            />
-          )}
-    </main>
-  </div>
-);
+      <main style={styles.main}>
+        {loading && <p>⏳ Đang tải dữ liệu...</p>}
+        {error && <p style={styles.error}>{error}</p>}
+
+        {!loading && !error && (
+          <TableView
+            title={tables.find((t) => t.key === activeTab)?.label}
+            data={data}
+            setData={setData}
+            activeTab={activeTab}
+          />
+        )}
+      </main>
+    </div>
+  );
 }
 
 const styles = {
