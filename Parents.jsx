@@ -64,6 +64,7 @@ export default function Parents() {
                 <th>Mã PH</th>
                 <th>Mã Xe</th>
                 <th>Mã NV</th>
+                <th>Mã TX</th>
               </tr>
             </thead>
             <tbody>
@@ -77,6 +78,7 @@ export default function Parents() {
                   <td>{hs.MaPH}</td>
                   <td>{hs.MaXE}</td>
                   <td>{hs.MaNV}</td>
+                  <td>{hs.MaTX}</td>
                 </tr>
               ))}
             </tbody>
@@ -89,18 +91,20 @@ export default function Parents() {
             <thead>
               <tr>
                 <th>Mã LT</th>
+                <th>Mã TX</th>
+                <th>Ca làm việc</th>
                 <th>Giờ xuất phát</th>
                 <th>Giờ kết thúc</th>
-                <th>Mã NV</th>
               </tr>
             </thead>
             <tbody>
               {data.map((lt, idx) => (
                 <tr key={idx}>
                   <td>{lt.MaLT}</td>
+                  <td>{lt.MaTX}</td>
+                  <td>{lt.CaLamViec}</td>
                   <td>{new Date(lt.GioXuatPhat).toLocaleString()}</td>
                   <td>{new Date(lt.GioKetThuc).toLocaleString()}</td>
-                  <td>{lt.MaNV}</td>
                 </tr>
               ))}
             </tbody>
